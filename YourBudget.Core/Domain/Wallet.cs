@@ -21,7 +21,7 @@ namespace YourBudget.Core.Domain
         /// <param name="name"></param>
         public Wallet(string name)
         {
-            Name = name;
+            SetName(name);
             Amount = 0;
         }
 
@@ -32,8 +32,17 @@ namespace YourBudget.Core.Domain
         /// <param name="amount"></param>
         public Wallet(string name, decimal amount)
         {
-            Name = name;
+            SetName(name);
             Amount = amount;
+        }
+
+        private void SetName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            Name = name;
         }
     }
 }
