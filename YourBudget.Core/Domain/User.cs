@@ -26,8 +26,8 @@ namespace YourBudget.Core.Domain
             SetUserName(userName);
             SetName(name);
             SetPassword(password);
-
-            Salt = salt;
+            SetSalt(salt);
+            
             CreatedAd = DateTime.UtcNow;
         }
 
@@ -83,6 +83,15 @@ namespace YourBudget.Core.Domain
                 throw new Exception("Password can not contain more than 100 characters.");
             }
             Password = password;
+        }
+
+        private void SetSalt(string salt)
+        {
+             if (string.IsNullOrWhiteSpace(salt))            
+            {
+                throw new ArgumentNullException(salt);
+            }
+            Salt = salt;
         }
 
         private bool IsEmailValid(string email)
