@@ -2,6 +2,7 @@ using System;
 
 namespace YourBudget.Core.Domain
 {
+    //TODO: dodać możliwość porównywania obiektów, chyba IEquetable interejs
     public class Wallet
     {
         public Guid Id { get; protected set; }
