@@ -20,11 +20,10 @@ namespace YourBudget.Core.Domain
             
         }
 
-        public User(string email, string userName, string name, string password, string salt)
+        public User(string email, string userName, string password, string salt)
         {
             SetEmail(email);
             SetUserName(userName);
-            SetName(name);
             SetPassword(password);
             SetSalt(salt);
             
@@ -59,7 +58,7 @@ namespace YourBudget.Core.Domain
             UserName = userName;
         }
 
-        private void SetName(string name)
+        public void SetName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
