@@ -42,7 +42,7 @@ namespace YourBudget.Core.Domain
             {
                 throw new Exception("Email is not valid");
             }
-            Email = email;
+            Email = email.ToLowerInvariant();
         }
 
         private void SetUserName(string userName)
