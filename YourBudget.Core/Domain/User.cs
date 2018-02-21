@@ -22,6 +22,7 @@ namespace YourBudget.Core.Domain
 
         public User(string email, string userName, string password, string salt)
         {
+            Id = Guid.NewGuid();
             SetEmail(email);
             SetUserName(userName);
             SetPassword(password);
