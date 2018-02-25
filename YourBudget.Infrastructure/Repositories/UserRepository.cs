@@ -8,7 +8,7 @@ namespace YourBudget.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private ISet<User> users = new HashSet<User>
+        private static ISet<User> users = new HashSet<User>
         {
             new User("user1@email.com", "user1", "password1", "salt1"),
             new User("user2@email.com", "user2", "password2", "salt2"),
@@ -20,10 +20,10 @@ namespace YourBudget.Infrastructure.Repositories
         
 
         public User Get(Guid id)
-            => users.Single(u => u.Id == id);
+            => users.SingleOrDefault(u => u.Id == id);
 
         public User Get(string email)
-            => users.Single(u => u.Email == email.ToLowerInvariant());
+            => users.SingleOrDefault(u => u.Email == email.ToLowerInvariant());
 
         public IEnumerable<User> GetAll()
             => users;

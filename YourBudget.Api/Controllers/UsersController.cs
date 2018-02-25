@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using YourBudget.Infrastructure.Command.Users;
 using YourBudget.Infrastructure.DTO;
 using YourBudget.Infrastructure.Services;
 
@@ -23,5 +24,11 @@ namespace YourBudget.Api.Controllers
         [HttpGet("{email}")]
         public UserDto Get(string email)
             => userService.Get(email);
+
+        [HttpPost]
+        public void Register([FromBody]CreateUser user)
+        {
+            userService.Register(user.Email, user.UserName, user.Password);
+        }
     }
 }
