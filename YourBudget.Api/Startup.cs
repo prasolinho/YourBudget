@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using YourBudget.Core.Repositories;
+using YourBudget.Infrastructure.Mappers;
 using YourBudget.Infrastructure.Repositories;
 using YourBudget.Infrastructure.Services;
 
@@ -28,6 +29,7 @@ namespace YourBudget.Api
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddMvc();
         }
 
