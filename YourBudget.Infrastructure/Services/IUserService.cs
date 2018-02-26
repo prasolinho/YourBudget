@@ -1,11 +1,12 @@
+using System.Threading.Tasks;
 using YourBudget.Infrastructure.DTO;
 
 namespace YourBudget.Infrastructure.Services
 {
     public interface IUserService
     {
-         void Register(string email, string username, string password);
+         Task RegisterAsync(string email, string username, string password);
 
-         UserDto Get(string email);
+         Task<UserDto> GetAsync(string email);
     }
 }

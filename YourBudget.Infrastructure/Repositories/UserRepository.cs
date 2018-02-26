@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using YourBudget.Core.Domain;
 using YourBudget.Core.Repositories;
 
@@ -15,28 +16,29 @@ namespace YourBudget.Infrastructure.Repositories
             new User("user3@email.com", "user3", "password3", "salt3"),
         };
 
-        public void Add(User user) 
-            => users.Add(user);
-        
+        public async Task<User> GetAsync(Guid id)
+            => await Task.FromResult(users.SingleOrDefault(u => u.Id == id));
 
-        public User Get(Guid id)
-            => users.SingleOrDefault(u => u.Id == id);
+        public async Task<User> GetAsync(string email)
+            => await Task.FromResult(users.SingleOrDefault(u => u.Email == email.ToLowerInvariant()));
 
-        public User Get(string email)
-            => users.SingleOrDefault(u => u.Email == email.ToLowerInvariant());
+        public async Task AddAsync(User user) 
+            => await Task.FromResult(users.Add(user));
 
-        public IEnumerable<User> GetAll()
-            => users;
+        public async Task<IEnumerable<User>> GetAllAsync()
+            => await Task.FromResult(users);
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            var user = Get(id);
+            var user = await GetAsync(id);
             users.Remove(user);
+            await Task.CompletedTask;
         }
 
-        public void Update(User user)
+        public async Task UpdateAsync(User user)
         {
             // dopóki nie mamy bazy to nic się nie dzieje :)
+            await Task.CompletedTask;
         }
     }
 }

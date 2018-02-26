@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using YourBudget.Core.Domain;
 using YourBudget.Core.Repositories;
@@ -17,15 +18,15 @@ namespace YourBudget.Infrastructure.Services
             this.userRepository = userRepository;
         }
 
-        public UserDto Get(string email)
+        public async Task<UserDto> GetAsync(string email)
         {
-            var user = userRepository.Get(email);
+            var user = await userRepository.GetAsync(email);
             return mapper.Map<User, UserDto>(user);
         }
 
-        public void Register(string email, string username, string password)
+        public async Task RegisterAsync(string email, string username, string password)
         {
-            var user = userRepository.Get(email);
+            var user = await userRepository.GetAsync(email);
             if (user != null)
             {
                 throw new Exception($"User with email: '{email}' already exists.");
@@ -33,7 +34,7 @@ namespace YourBudget.Infrastructure.Services
 
             var salt = Guid.NewGuid().ToString("N");
             user = new User(email, username, password, salt);
-            userRepository.Add(user);
+            await userRepository.AddAsync(user);
         }
     }
 }

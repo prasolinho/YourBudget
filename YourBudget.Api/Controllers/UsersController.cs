@@ -22,13 +22,13 @@ namespace YourBudget.Api.Controllers
 
         // GET api/values/5
         [HttpGet("{email}")]
-        public UserDto Get(string email)
-            => userService.Get(email);
+        public async Task<UserDto> GetAsync(string email)
+            => await userService.GetAsync(email);
 
         [HttpPost]
-        public void Register([FromBody]CreateUser user)
+        public async Task RegisterAsync([FromBody]CreateUser user)
         {
-            userService.Register(user.Email, user.UserName, user.Password);
+            await userService.RegisterAsync(user.Email, user.UserName, user.Password);
         }
     }
 }
