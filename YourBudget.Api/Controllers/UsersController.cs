@@ -22,13 +22,22 @@ namespace YourBudget.Api.Controllers
 
         // GET api/values/5
         [HttpGet("{email}")]
-        public async Task<UserDto> GetAsync(string email)
-            => await userService.GetAsync(email);
+        public async Task<IActionResult> GetAsync(string email)
+        {
+            var user = await userService.GetAsync(email);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Json(user);
+        }
 
         [HttpPost]
-        public async Task RegisterAsync([FromBody]CreateUser user)
+        public async Task<IActionResult> RegisterAsync([FromBody]CreateUser request)
         {
-            await userService.RegisterAsync(user.Email, user.UserName, user.Password);
+            await userService.RegisterAsync(request.Email, request.UserName, request.Password);
+            return Created($"users/{request.Email}", new object());
         }
     }
 }
