@@ -18,6 +18,7 @@ namespace YourBudget.Infrastructure.Services
             this.userRepository = userRepository;
         }
 
+        // TODO: add unit test to this method
         public async Task<UserDto> GetAsync(string email)
         {
             var user = await userRepository.GetAsync(email);
