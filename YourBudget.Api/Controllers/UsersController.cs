@@ -10,15 +10,13 @@ using YourBudget.Infrastructure.Services;
 
 namespace YourBudget.Api.Controllers
 {
-    [Route("[controller]")]
-    public class UsersController : Controller
+    public class UsersController : ApiControllerBase
     {
         private readonly IUserService userService;
-        private readonly ICommandDispatcher commandDispatcher;
 
         public UsersController(IUserService userService, ICommandDispatcher commandDispatcher)
+            : base(commandDispatcher)
         {
-            this.commandDispatcher = commandDispatcher;
             this.userService = userService;
 
         }
@@ -39,8 +37,8 @@ namespace YourBudget.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterAsync([FromBody]CreateUser command)
         {
-            await commandDispatcher.DispatchAsync(command);
-            //await userService.RegisterAsync(command.Email, command.UserName, command.Password);
+            await CommandDispatcher.DispatchAsync(command);
+            
             return Created($"users/{command.Email}", new object());
         }
     }
