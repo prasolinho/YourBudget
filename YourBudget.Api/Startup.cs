@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using YourBudget.Core.Repositories;
+using YourBudget.Infrastructure.IoC.Modules;
 using YourBudget.Infrastructure.Mappers;
 using YourBudget.Infrastructure.Repositories;
 using YourBudget.Infrastructure.Services;
@@ -38,6 +39,7 @@ namespace YourBudget.Api
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
+            builder.RegisterModule<CommandModule>();
             ApplicationContainer = builder.Build();
 
             return new AutofacServiceProvider(ApplicationContainer);
