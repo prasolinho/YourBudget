@@ -7,7 +7,7 @@ using YourBudget.Infrastructure.DTO;
 
 namespace YourBudget.Infrastructure.Services
 {
-    public class UserService : IUserService
+    public class UserService : IUserService, IService
     {
         public readonly IUserRepository userRepository;
         private readonly IMapper mapper;

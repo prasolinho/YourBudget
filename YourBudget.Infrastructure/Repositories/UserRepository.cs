@@ -7,7 +7,7 @@ using YourBudget.Core.Repositories;
 
 namespace YourBudget.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository 
     {
         private static ISet<User> users = new HashSet<User>
         {

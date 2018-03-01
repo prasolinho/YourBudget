@@ -5,7 +5,7 @@ using YourBudget.Core.Domain;
 
 namespace YourBudget.Core.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository
     {
          Task AddAsync(User user);
          Task<User> GetAsync(Guid id);
