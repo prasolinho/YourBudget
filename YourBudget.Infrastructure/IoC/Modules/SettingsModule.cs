@@ -17,6 +17,9 @@ namespace YourBudget.Infrastructure.IoC.Modules
         {
             builder.RegisterInstance(configuration.GetSettings<GeneralSettings>())
                 .SingleInstance();
+
+            builder.RegisterInstance(configuration.GetSettings<JwtSettings>())
+                .SingleInstance();
         }
     }
 }

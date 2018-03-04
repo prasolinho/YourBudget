@@ -14,12 +14,15 @@ namespace YourBudget.Tests.Services
         private readonly Mock<IUserRepository> userRepository;
         private readonly Mock<IMapper> mapper;
 
+        private readonly Mock<IEncrypter> encrypter;
+
         private string email = "user12@email.com";
 
         public UserServiceTests()
         {
             userRepository = new Mock<IUserRepository>();
             mapper = new Mock<IMapper>();
+            encrypter = new Mock<IEncrypter>();
         }
 
         [Fact]
@@ -37,9 +40,13 @@ namespace YourBudget.Tests.Services
         {
             // Arrange
             userRepository.Setup(ga => ga.GetAsync(email)).ReturnsAsync(new User(email, "user12", "secret12", Guid.NewGuid().ToString("N")));
-            
+
+            // TODO: Czy tak może zostać? Popawić?
+            encrypter.Setup(e => e.GetSalt(It.IsAny<string>())).Returns(It.IsAny<string>());
+            encrypter.Setup(e => e.GetHash(It.IsAny<string>(), It.IsAny<string>())).Returns(It.IsAny<string>());
+
             // Act
-            var userService = new UserService(userRepository.Object, mapper.Object);
+            await Execute();
 
             Exception exc = null;
             try
@@ -57,7 +64,7 @@ namespace YourBudget.Tests.Services
 
         private async Task Execute()
         {
-            var userService = new UserService(userRepository.Object, mapper.Object);
+            var userService = new UserService(userRepository.Object, encrypter.Object, mapper.Object);
             await userService.RegisterAsync(email, "user12", "secret12");
         }
     }

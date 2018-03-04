@@ -8,5 +8,7 @@ namespace YourBudget.Infrastructure.Services
          Task RegisterAsync(string email, string username, string password);
 
          Task<UserDto> GetAsync(string email);
+
+         Task LoginAsync(string email, string password);
     }
 }

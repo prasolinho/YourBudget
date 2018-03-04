@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using YourBudget.Infrastructure.Command;
 using YourBudget.Infrastructure.Command.Users;
@@ -21,7 +22,7 @@ namespace YourBudget.Api.Controllers
 
         }
 
-        // GET api/values/5
+        [Authorize]
         [HttpGet("{email}")]
         public async Task<IActionResult> GetAsync(string email)
         {

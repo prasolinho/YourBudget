@@ -11,9 +11,11 @@ namespace YourBudget.Infrastructure.Services
     {
         public readonly IUserRepository userRepository;
         private readonly IMapper mapper;
+        private readonly IEncrypter encrypter;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IEncrypter encrypter, IMapper mapper)
         {
+            this.encrypter = encrypter;
             this.mapper = mapper;
             this.userRepository = userRepository;
         }
@@ -25,6 +27,22 @@ namespace YourBudget.Infrastructure.Services
             return mapper.Map<User, UserDto>(user);
         }
 
+        public async Task LoginAsync(string email, string password)
+        {
+            var user = await userRepository.GetAsync(email);
+            if (user == null)
+            {
+                throw new Exception("Invalid credentials");
+            }
+
+            var salt = encrypter.GetSalt(password);
+            var hash = encrypter.GetHash(password, salt);
+
+            if (user.Password == hash) return;
+
+            throw new Exception("Invalid credentials");
+        }
+
         public async Task RegisterAsync(string email, string username, string password)
         {
             var user = await userRepository.GetAsync(email);
@@ -33,8 +51,9 @@ namespace YourBudget.Infrastructure.Services
                 throw new Exception($"User with email: '{email}' already exists.");
             }
 
-            var salt = Guid.NewGuid().ToString("N");
-            user = new User(email, username, password, salt);
+            var salt = encrypter.GetSalt(password);
+            var hash = encrypter.GetHash(password, salt);
+            user = new User(email, username, hash, salt);
             await userRepository.AddAsync(user);
         }
     }
