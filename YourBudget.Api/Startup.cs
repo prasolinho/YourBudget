@@ -39,14 +39,6 @@ namespace YourBudget.Api
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddSingleton(AutoMapperConfig.Initialize());
-            services.AddMvc();
-
-            var builder = new ContainerBuilder();
-            builder.Populate(services);
-            builder.RegisterModule(new ContainerModule(Configuration));
-            ApplicationContainer = builder.Build();
-
-            var autofacServiceProvider = new AutofacServiceProvider(ApplicationContainer);
 
             services.AddAuthentication(opt =>
             {
@@ -63,6 +55,14 @@ namespace YourBudget.Api
                 };
             });
 
+            services.AddMvc();
+
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+            builder.RegisterModule(new ContainerModule(Configuration));
+            ApplicationContainer = builder.Build();
+
+            var autofacServiceProvider = new AutofacServiceProvider(ApplicationContainer);
             return autofacServiceProvider;
         }
 
