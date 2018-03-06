@@ -28,6 +28,12 @@ namespace YourBudget.Tests.Services
         [Fact]
         public async Task register_async_should_invoke_add_async_on_repository()
         {
+            // Arrange
+
+            // TODO: Czy tak może zostać? Popawić?
+            encrypter.Setup(e => e.GetSalt(It.IsAny<string>())).Returns("aaaaaa");
+            encrypter.Setup(e => e.GetHash(It.IsAny<string>(), It.IsAny<string>())).Returns("bbbbbb");
+
             // Act
             await Execute();
 
@@ -41,16 +47,10 @@ namespace YourBudget.Tests.Services
             // Arrange
             userRepository.Setup(ga => ga.GetAsync(email)).ReturnsAsync(new User(email, "user12", "secret12", Guid.NewGuid().ToString("N")));
 
-            // TODO: Czy tak może zostać? Popawić?
-            encrypter.Setup(e => e.GetSalt(It.IsAny<string>())).Returns(It.IsAny<string>());
-            encrypter.Setup(e => e.GetHash(It.IsAny<string>(), It.IsAny<string>())).Returns(It.IsAny<string>());
-
-            // Act
-            await Execute();
-
             Exception exc = null;
             try
             {
+                // Act
                 await Execute();
             }
             catch (Exception e)

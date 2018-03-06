@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Text;
 using YourBudget.Infrastructure.Command.Users;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace YourBudget.Tests.EndToEnd.Controllers
 {
@@ -19,8 +21,18 @@ namespace YourBudget.Tests.EndToEnd.Controllers
 
         public UsersControllerTests()
         {
-             // Arrange
-            _server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
+            // Arrange
+
+            // Get configuration.
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Path.GetFullPath(@"../../../../YourBudget.API/"))
+                .AddJsonFile("appsettings.json", optional: false)
+                .AddUserSecrets<Startup>()
+                .Build();
+
+            _server = new TestServer(new WebHostBuilder()
+                .UseStartup<Startup>()
+                .UseConfiguration(configuration));
             _client = _server.CreateClient();
         }
 
