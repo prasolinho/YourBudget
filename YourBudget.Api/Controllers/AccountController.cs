@@ -17,7 +17,7 @@ namespace YourBudget.Api.Controllers
         [Route("token")]
         public IActionResult Get()
         {
-            var token = jwtHandler.CreateToken("user1@email.com", "user");
+            var token = jwtHandler.CreateToken("user1@email.com", "admin");
             return Json(token);
         }
     }

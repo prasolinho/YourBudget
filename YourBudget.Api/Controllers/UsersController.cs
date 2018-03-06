@@ -22,7 +22,7 @@ namespace YourBudget.Api.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Policy = "admin")]
         [HttpGet("{email}")]
         public async Task<IActionResult> GetAsync(string email)
         {

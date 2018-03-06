@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -54,7 +55,10 @@ namespace YourBudget.Api
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:key"]))
                 };
             });
-
+            services.AddAuthorization(auth => auth.AddPolicy("admin", policy =>
+            {
+                policy.RequireRole("admin");
+            }));
             services.AddMvc();
 
             var builder = new ContainerBuilder();
