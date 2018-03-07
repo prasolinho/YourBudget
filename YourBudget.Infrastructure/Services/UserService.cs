@@ -35,7 +35,7 @@ namespace YourBudget.Infrastructure.Services
                 throw new Exception("Invalid credentials");
             }
 
-            var salt = encrypter.GetSalt(password);
+            var salt = encrypter.GetSalt();
             var hash = encrypter.GetHash(password, salt);
 
             if (user.Password == hash) return;
@@ -51,7 +51,7 @@ namespace YourBudget.Infrastructure.Services
                 throw new Exception($"User with email: '{email}' already exists.");
             }
 
-            var salt = encrypter.GetSalt(password);
+            var salt = encrypter.GetSalt();
             var hash = encrypter.GetHash(password, salt);
             user = new User(email, username, hash, salt);
             await userRepository.AddAsync(user);

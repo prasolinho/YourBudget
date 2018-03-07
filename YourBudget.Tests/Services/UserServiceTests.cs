@@ -31,7 +31,7 @@ namespace YourBudget.Tests.Services
             // Arrange
 
             // TODO: Czy tak może zostać? Popawić?
-            encrypter.Setup(e => e.GetSalt(It.IsAny<string>())).Returns("aaaaaa");
+            encrypter.Setup(e => e.GetSalt()).Returns("aaaaaa");
             encrypter.Setup(e => e.GetHash(It.IsAny<string>(), It.IsAny<string>())).Returns("bbbbbb");
 
             // Act
