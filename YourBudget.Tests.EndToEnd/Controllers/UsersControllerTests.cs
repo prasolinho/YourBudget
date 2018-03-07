@@ -27,7 +27,6 @@ namespace YourBudget.Tests.EndToEnd.Controllers
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Path.GetFullPath(@"../../../../YourBudget.API/"))
                 .AddJsonFile("appsettings.json", optional: false)
-                .AddUserSecrets<Startup>()
                 .Build();
 
             _server = new TestServer(new WebHostBuilder()

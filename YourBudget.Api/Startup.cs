@@ -19,7 +19,7 @@ using YourBudget.Infrastructure.IoC;
 using YourBudget.Infrastructure.IoC.Modules;
 using YourBudget.Infrastructure.Mappers;
 using YourBudget.Infrastructure.Repositories;
-using YourBudget.Infrastructure.Services;
+using YourBudget.Infrastructure.Services;   
 
 namespace YourBudget.Api
 {
