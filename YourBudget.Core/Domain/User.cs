@@ -13,6 +13,8 @@ namespace YourBudget.Core.Domain
         public string Password { get; protected set; }
         public string Salt { get; protected set; }
 
+        public string Role { get; protected set; }
+
         public DateTime CreatedAd { get; protected set; }
 
         protected User()

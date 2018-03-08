@@ -1,5 +1,7 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using YourBudget.Infrastructure.Command;
+using YourBudget.Infrastructure.Command.Accounts;
 using YourBudget.Infrastructure.Services;
 
 namespace YourBudget.Api.Controllers
@@ -14,11 +16,11 @@ namespace YourBudget.Api.Controllers
         }
 
         [HttpPost]
-        [Route("token")]
-        public IActionResult Get()
+        [Route("login")]
+        public async Task<IActionResult> Post([FromBody] LogIn command)
         {
-            var token = jwtHandler.CreateToken("user1@email.com", "admin");
-            return Json(token);
+            await CommandDispatcher.DispatchAsync(command);
+            return Json("Not throwing exception so must be OK.");
         }
     }
 }

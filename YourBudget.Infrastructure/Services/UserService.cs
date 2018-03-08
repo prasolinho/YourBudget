@@ -35,9 +35,7 @@ namespace YourBudget.Infrastructure.Services
                 throw new Exception("Invalid credentials");
             }
 
-            var salt = encrypter.GetSalt();
-            var hash = encrypter.GetHash(password, salt);
-
+            var hash = encrypter.GetHash(password, user.Salt);
             if (user.Password == hash) return;
 
             throw new Exception("Invalid credentials");
