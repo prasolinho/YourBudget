@@ -45,7 +45,7 @@ namespace YourBudget.Tests.Services.UserService
         public async void register_async_throw_exception_when_user_already_exists()
         {
             // Arrange
-            userRepository.Setup(ga => ga.GetAsync(email)).ReturnsAsync(new User(email, "user12", "secret12", Guid.NewGuid().ToString("N")));
+            userRepository.Setup(ga => ga.GetAsync(email)).ReturnsAsync(new User(email, "user12", "secret12", Guid.NewGuid().ToString("N"), "user"));
 
             Exception exc = null;
             try

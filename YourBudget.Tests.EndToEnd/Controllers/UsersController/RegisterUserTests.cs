@@ -1,40 +1,14 @@
-using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Xunit;
-using YourBudget.Api;
 using YourBudget.Infrastructure.Command.Users;
 using YourBudget.Infrastructure.DTO;
 
 namespace YourBudget.Tests.EndToEnd.Controllers.UsersController
 {
-    public class RegisterUserTests
+    public class RegisterUserTests : ControllerTestsBase
     {
-        private readonly TestServer _server;
-        private readonly HttpClient _client;
-
-        public RegisterUserTests()
-        {
-            // Arrange
-
-            // Get configuration.
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Path.GetFullPath(@"../../../../YourBudget.API/"))
-                .AddJsonFile("appsettings.json", optional: false)
-                .Build();
-
-            _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>()
-                .UseConfiguration(configuration));
-            _client = _server.CreateClient();
-        }
-
         [Fact]
         public async Task given_unique_email_user_should_be_created()
         {
@@ -48,7 +22,7 @@ namespace YourBudget.Tests.EndToEnd.Controllers.UsersController
             };
 
             // Act
-            var response = await _client.PostAsync("users", GetPayload(request));
+            var response = await Client.PostAsync("users", GetPayload(request));
             
             // Assert
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
@@ -60,15 +34,9 @@ namespace YourBudget.Tests.EndToEnd.Controllers.UsersController
 
         private async Task<UserDto> GetUserAsync(string email)
         {
-            var response = await _client.GetAsync($"users/{email}");
+            var response = await Client.GetAsync($"users/{email}");
             var responseString = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<UserDto>(responseString);
-        }
-
-        private static StringContent GetPayload(object data)
-        {
-            var json = JsonConvert.SerializeObject(data);
-            return new StringContent(json, Encoding.UTF8, "application/json");
         }
     }
 }

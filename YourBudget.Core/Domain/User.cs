@@ -22,13 +22,14 @@ namespace YourBudget.Core.Domain
             
         }
 
-        public User(string email, string userName, string password, string salt)
+        public User(string email, string userName, string password, string salt, string role)
         {
             Id = Guid.NewGuid();
             SetEmail(email);
             SetUserName(userName);
             SetPassword(password);
             SetSalt(salt);
+            SetRole(role);
             
             CreatedAd = DateTime.UtcNow;
         }
@@ -74,7 +75,7 @@ namespace YourBudget.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(password))            
             {
-                throw new ArgumentNullException(password);
+                throw new ArgumentNullException(nameof(password));
             }
             if (password.Length < 4)
             {
@@ -89,11 +90,20 @@ namespace YourBudget.Core.Domain
 
         private void SetSalt(string salt)
         {
-             if (string.IsNullOrWhiteSpace(salt))            
+            if (string.IsNullOrWhiteSpace(salt))            
             {
-                throw new ArgumentNullException(salt);
+                throw new ArgumentNullException(nameof(salt));
             }
             Salt = salt;
+        }
+
+        private void SetRole(string role)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                throw new ArgumentNullException(nameof(role));
+            }
+            Role = role;
         }
 
         private bool IsEmailValid(string email)

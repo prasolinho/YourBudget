@@ -51,7 +51,7 @@ namespace YourBudget.Infrastructure.Services
 
             var salt = encrypter.GetSalt();
             var hash = encrypter.GetHash(password, salt);
-            user = new User(email, username, hash, salt);
+            user = new User(email, username, hash, salt, "user"); // TODO: poprawiæ przekazywanie roli
             await userRepository.AddAsync(user);
         }
     }

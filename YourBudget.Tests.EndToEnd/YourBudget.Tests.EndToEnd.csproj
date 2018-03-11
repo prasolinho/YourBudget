@@ -22,4 +22,10 @@
     <ProjectReference Include="..\YourBudget.Infrastructure\YourBudget.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

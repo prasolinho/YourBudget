@@ -59,6 +59,7 @@ namespace YourBudget.Api
             {
                 policy.RequireRole("admin");
             }));
+            services.AddMemoryCache();
             services.AddMvc();
 
             var builder = new ContainerBuilder();

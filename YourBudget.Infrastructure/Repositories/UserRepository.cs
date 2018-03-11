@@ -11,9 +11,9 @@ namespace YourBudget.Infrastructure.Repositories
     {
         private static ISet<User> users = new HashSet<User>
         {
-            new User("user1@email.com", "user1", "password1", "salt1"),
-            new User("user2@email.com", "user2", "password2", "salt2"),
-            new User("user3@email.com", "user3", "password3", "salt3"),
+            new User("user1@email.com", "user1", "password1", "salt1", "user"),
+            new User("user2@email.com", "user2", "password2", "salt2", "user"),
+            new User("admin@email.com", "admin", "admin", "admin", "admin"),
         };
 
         public async Task<User> GetAsync(Guid id)

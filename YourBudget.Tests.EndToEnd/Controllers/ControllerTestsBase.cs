@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System.IO;
 using System.Net.Http;
 using System.Text;
 using YourBudget.Api;
@@ -16,10 +15,11 @@ namespace YourBudget.Tests.EndToEnd.Controllers
 
         protected ControllerTestsBase()
         {
+            // https://github.com/aspnet/Hosting/issues/1191
+
             // Konfiguracja taka potrzeban, ponieważ w Startupie dodaliśmy obsługę JWT Tokens
             // i potrzebne są dane z pliku appsettings.json
             var configuration = new ConfigurationBuilder()
-                .SetBasePath(Path.GetFullPath(@"../../../../YourBudget.API/"))
                 .AddJsonFile("appsettings.json", optional: false)
                 .Build();
 

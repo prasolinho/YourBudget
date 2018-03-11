@@ -1,6 +1,8 @@
+using Microsoft.Extensions.Caching.Memory;
 using System.Threading.Tasks;
 using YourBudget.Infrastructure.Command;
 using YourBudget.Infrastructure.Command.Accounts;
+using YourBudget.Infrastructure.Extensions;
 using YourBudget.Infrastructure.Services;
 
 namespace YourBudget.Infrastructure.Handlers.Accounts
@@ -9,17 +11,21 @@ namespace YourBudget.Infrastructure.Handlers.Accounts
     {
         private readonly IUserService userService;
         private readonly IJwtHandler jwtHandler;
+        private readonly IMemoryCache cache;
 
-        public LogInHandler(IUserService userService, IJwtHandler jwtHandler)
+        public LogInHandler(IUserService userService, IJwtHandler jwtHandler, IMemoryCache cache)
         {
             this.jwtHandler = jwtHandler;
+            this.cache = cache;
             this.userService = userService;
         }
 
         public async Task HandleAsync(LogIn command)
         {
             await userService.LoginAsync(command.Email, command.Password);
-            var jwt = jwtHandler.CreateToken(command.Email, "user"); // Na razie będzie tylko taka rola.
+            var user = await userService.GetAsync(command.Email);
+            var token = jwtHandler.CreateToken(command.Email, user.Role);
+            cache.SetJwt(command.TokenId, token);
         }
     }
 }
