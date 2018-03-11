@@ -9,7 +9,7 @@ namespace YourBudget.Infrastructure.Services
 {
     public class UserService : IUserService, IService
     {
-        public readonly IUserRepository userRepository;
+        private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
         private readonly IEncrypter encrypter;
 
@@ -27,16 +27,16 @@ namespace YourBudget.Infrastructure.Services
             return mapper.Map<User, UserDto>(user);
         }
 
-        public async Task LoginAsync(string email, string password)
+        public async Task<bool> LoginAsync(string email, string password)
         {
-            var user = await userRepository.GetAsync(email);
+            var user = await userRepository.GetAsync(email); 
             if (user == null)
             {
                 throw new Exception("Invalid credentials");
             }
 
             var hash = encrypter.GetHash(password, user.Salt);
-            if (user.Password == hash) return;
+            if (user.Password == hash) return true;
 
             throw new Exception("Invalid credentials");
         }

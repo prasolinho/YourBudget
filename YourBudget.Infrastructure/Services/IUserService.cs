@@ -9,6 +9,6 @@ namespace YourBudget.Infrastructure.Services
 
          Task<UserDto> GetAsync(string email);
 
-         Task LoginAsync(string email, string password);
+         Task<bool> LoginAsync(string email, string password);
     }
 }

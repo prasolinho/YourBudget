@@ -64,7 +64,7 @@ namespace YourBudget.Tests.Services
 
         private async Task Execute()
         {
-            var userService = new UserService(userRepository.Object, encrypter.Object, mapper.Object);
+            var userService = new Infrastructure.Services.UserService(userRepository.Object, encrypter.Object, mapper.Object);
             await userService.RegisterAsync(email, "user12", "secret12");
         }
     }
