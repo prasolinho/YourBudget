@@ -7,9 +7,9 @@ using YourBudget.Core.Domain;
 using YourBudget.Core.Repositories;
 using YourBudget.Infrastructure.Services;
 
-namespace YourBudget.Tests.Services
+namespace YourBudget.Tests.Services.UserService
 {
-    public class UserServiceTests
+    public class RegisterTests
     {
         private readonly Mock<IUserRepository> userRepository;
         private readonly Mock<IMapper> mapper;
@@ -18,7 +18,7 @@ namespace YourBudget.Tests.Services
 
         private string email = "user12@email.com";
 
-        public UserServiceTests()
+        public RegisterTests()
         {
             userRepository = new Mock<IUserRepository>();
             mapper = new Mock<IMapper>();
