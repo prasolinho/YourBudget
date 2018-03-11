@@ -1,43 +1,19 @@
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Xunit;
-using YourBudget.Api;
 using YourBudget.Infrastructure.DTO;
 using FluentAssertions;
 
 namespace YourBudget.Tests.EndToEnd.Controllers.UsersController
 {
-    public class GetUserByEmailTests
+    public class GetUserByEmailTests : ControllerTestsBase
     {
-        private readonly TestServer _server;
-        private readonly HttpClient _client;
-
         private string email;
 
         public GetUserByEmailTests()
         {
-            // Arrange
-
-            // Konfiguracja taka potrzeban, ponieważ w Startupie dodaliśmy obsługę JWT Tokens
-            // i potrzebne są dane z pliku appsettings.json
-            
-            // Get configuration.
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Path.GetFullPath(@"../../../../YourBudget.API/"))
-                .AddJsonFile("appsettings.json", optional: false)
-                .Build();
-
-            _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>()
-                .UseConfiguration(configuration));
-            _client = _server.CreateClient();
-
             email = null;
         }
 
@@ -76,7 +52,7 @@ namespace YourBudget.Tests.EndToEnd.Controllers.UsersController
 
         private async Task<HttpResponseMessage> Execute()
         {
-            return await _client.GetAsync($"users/{email}");
+            return await Client.GetAsync($"users/{email}");
         }
     }
 }
