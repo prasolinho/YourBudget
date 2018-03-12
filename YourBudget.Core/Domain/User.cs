@@ -22,9 +22,9 @@ namespace YourBudget.Core.Domain
             
         }
 
-        public User(string email, string userName, string password, string salt, string role)
+        public User(Guid userId, string email, string userName, string password, string salt, string role)
         {
-            Id = Guid.NewGuid();
+            Id = userId;
             SetEmail(email);
             SetUserName(userName);
             SetPassword(password);

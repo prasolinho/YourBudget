@@ -17,6 +17,7 @@ namespace YourBudget.Tests.Services.UserService
         private readonly Mock<IEncrypter> encrypter;
 
         private string email = "user12@email.com";
+        private Guid userId = Guid.NewGuid();
 
         public RegisterTests()
         {
@@ -45,7 +46,7 @@ namespace YourBudget.Tests.Services.UserService
         public async void register_async_throw_exception_when_user_already_exists()
         {
             // Arrange
-            userRepository.Setup(ga => ga.GetAsync(email)).ReturnsAsync(new User(email, "user12", "secret12", Guid.NewGuid().ToString("N"), "user"));
+            userRepository.Setup(ga => ga.GetAsync(email)).ReturnsAsync(new User(userId, email, "user12", "secret12", Guid.NewGuid().ToString("N"), "user"));
 
             Exception exc = null;
             try
@@ -65,7 +66,7 @@ namespace YourBudget.Tests.Services.UserService
         private async Task Execute()
         {
             var userService = new Infrastructure.Services.UserService(userRepository.Object, encrypter.Object, mapper.Object);
-            await userService.RegisterAsync(email, "user12", "secret12");
+            await userService.RegisterAsync(userId, email, "user12", "secret12", "user");
         }
     }
 }

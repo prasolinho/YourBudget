@@ -80,6 +80,14 @@ namespace YourBudget.Api
             }
 
             app.UseAuthentication();
+
+            bool seedData = Configuration["general:SeedData"].ToLower() == "true" ? true : false;
+            if (seedData)
+            {
+                var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
+                dataInitializer.SeedAsync();
+            }
+
             app.UseMvc();
             appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using YourBudget.Infrastructure.Command;
 using YourBudget.Infrastructure.Command.Users;
@@ -16,7 +17,8 @@ namespace YourBudget.Infrastructure.Handlers.Users
         }
         public async Task HandleAsync(CreateUser command)
         {
-            await userService.RegisterAsync(command.Email, command.UserName, command.Password);
+            // TODO: poprawiæ przekazywanie ID oraz roli
+            await userService.RegisterAsync(Guid.NewGuid(), command.Email, command.UserName, command.Password, "user");
         }
     }
 }

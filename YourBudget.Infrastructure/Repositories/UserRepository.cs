@@ -9,12 +9,7 @@ namespace YourBudget.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository 
     {
-        private static ISet<User> users = new HashSet<User>
-        {
-            new User("user1@email.com", "user1", "password1", "salt1", "user"),
-            new User("user2@email.com", "user2", "password2", "salt2", "user"),
-            new User("admin@email.com", "admin", "admin", "admin", "admin"),
-        };
+        private static ISet<User> users = new HashSet<User>();
 
         public async Task<User> GetAsync(Guid id)
             => await Task.FromResult(users.SingleOrDefault(u => u.Id == id));

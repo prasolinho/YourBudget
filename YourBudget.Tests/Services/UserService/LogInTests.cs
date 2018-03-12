@@ -58,7 +58,7 @@ namespace YourBudget.Tests.Services.UserService
             // Arrange
             hash = "qwertyuiopasdfghjklzxcvbnm";
 
-            User user = new User(email, "TP", hash, "salt", "user");
+            User user = new User(Guid.NewGuid(), email, "TP", hash, "salt", "user");
             userRepository.Setup(x => x.GetAsync(email)).ReturnsAsync(user);
             encrypter.Setup(x => x.GetHash(password, user.Salt)).Returns(hash + "XXX");
 
@@ -85,7 +85,7 @@ namespace YourBudget.Tests.Services.UserService
             // Arrange
             hash = "qwertyuiopasdfghjklzxcvbnm";
 
-            User user = new User(email, "TP", hash, "salt", "user");
+            User user = new User(Guid.NewGuid(), email, "TP", hash, "salt", "user");
             userRepository.Setup(x => x.GetAsync(email)).ReturnsAsync(user);
             encrypter.Setup(x => x.GetHash(password, user.Salt)).Returns(hash);
 
