@@ -55,6 +55,7 @@ namespace YourBudget.Api
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["jwt:key"]))
                 };
             });
+
             services.AddAuthorization(auth => auth.AddPolicy("admin", policy =>
             {
                 policy.RequireRole("admin");
