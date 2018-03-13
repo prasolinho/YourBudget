@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using YourBudget.Core.Repositories;
 using YourBudget.Infrastructure.IoC;
 using YourBudget.Infrastructure.IoC.Modules;
@@ -61,7 +62,8 @@ namespace YourBudget.Api
                 policy.RequireRole("admin");
             }));
             services.AddMemoryCache();
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(o => o.SerializerSettings.Formatting = Formatting.Indented);
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
