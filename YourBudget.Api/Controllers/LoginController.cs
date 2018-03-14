@@ -23,7 +23,7 @@ namespace YourBudget.Api.Controllers
         public async Task<IActionResult> Post([FromBody] LogIn command)
         {
             command.TokenId = Guid.NewGuid();
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
             var token = cache.GetJwt(command.TokenId);
 
             return Json(token);

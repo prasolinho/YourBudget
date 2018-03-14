@@ -24,7 +24,7 @@ namespace YourBudget.Infrastructure.Handlers.Accounts
         {
             await userService.LoginAsync(command.Email, command.Password);
             var user = await userService.GetAsync(command.Email);
-            var token = jwtHandler.CreateToken(command.Email, user.Role);
+            var token = jwtHandler.CreateToken(user.Id, user.Role);
             cache.SetJwt(command.TokenId, token);
         }
     }

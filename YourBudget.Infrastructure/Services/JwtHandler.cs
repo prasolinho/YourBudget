@@ -17,12 +17,13 @@ namespace YourBudget.Infrastructure.Services
             this.settings = settings;
         }
 
-        public JwtDto CreateToken(string email, string role)
+        public JwtDto CreateToken(Guid userId, string role)
         {
             var now = DateTime.UtcNow;
             var claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, email), // Subject: do czego odnośni się Token
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()), // Subject: do czego odnośni się Token
+                new Claim(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
                 new Claim(ClaimTypes.Role, role), // Role
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // JWT_ID, Identyfikator
                 new Claim(JwtRegisteredClaimNames.Iat, now.ToTimestamp().ToString(), ClaimValueTypes.Integer64) // Issued at - kiedy token został stwrzony
