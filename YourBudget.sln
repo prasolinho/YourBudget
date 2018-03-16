@@ -12,6 +12,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YourBudget.Tests", "YourBud
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YourBudget.Tests.EndToEnd", "YourBudget.Tests.EndToEnd\YourBudget.Tests.EndToEnd.csproj", "{8319044A-86F7-446C-88F1-C08A248D6D89}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_scripts", "_scripts", "{61056F0C-98AC-47D3-B4F7-FFA899F3E134}"
+	ProjectSection(SolutionItems) = preProject
+		start.bat = start.bat
+		test.bat = test.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
