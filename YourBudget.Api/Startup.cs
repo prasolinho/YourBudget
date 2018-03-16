@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using YourBudget.Api.Framework;
 using YourBudget.Core.Repositories;
 using YourBudget.Infrastructure.IoC;
 using YourBudget.Infrastructure.IoC.Modules;
@@ -91,6 +92,7 @@ namespace YourBudget.Api
                 dataInitializer.SeedAsync();
             }
 
+            app.UseCustomeExceptionHandler();
             app.UseMvc();
             appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
         }
