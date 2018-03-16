@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
@@ -24,6 +25,13 @@ namespace YourBudget.Tests.EndToEnd.Controllers
                 .Build();
 
             Server = new TestServer(new WebHostBuilder()
+                // Doesn't work in here :(
+                //.ConfigureLogging((hostingContext, logging) =>
+                //{
+                //    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                //    logging.AddConsole();
+                //    logging.AddDebug();
+                //})
                 .UseStartup<Startup>()
                 .UseConfiguration(configuration));
             Client = Server.CreateClient();

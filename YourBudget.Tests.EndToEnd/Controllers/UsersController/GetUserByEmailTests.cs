@@ -29,7 +29,7 @@ namespace YourBudget.Tests.EndToEnd.Controllers.UsersController
             // Assert
             email.Should().BeEquivalentTo(user.Email);
         }
-        
+
         [Fact]
         public async Task given_invalid_email_user_should_not_exists()
         {
