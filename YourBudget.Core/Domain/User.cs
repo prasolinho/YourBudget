@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+using YourBudget.Core.Domain.Exceptions;
 
 namespace YourBudget.Core.Domain
 {
@@ -38,12 +39,12 @@ namespace YourBudget.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                throw new ArgumentNullException(nameof(email));
+                throw new DomainException(ErrorCodes.InvalidEmail, "Email can not be empty");
             }
            
             if (!IsEmailValid(email))
             {
-                throw new Exception("Email is not valid");
+                throw new DomainException(ErrorCodes.InvalidEmail, "Email is not valid");
             }
             Email = email.ToLowerInvariant();
         }
@@ -52,7 +53,7 @@ namespace YourBudget.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(userName))
             {
-                throw new ArgumentNullException(nameof(userName));
+                throw new DomainException(ErrorCodes.InvalidUsername, "User name can not be empty");
             }
             // Skoro metoda jest private to na razie jest to niepotrzbne
             // if (UserName == userName)
@@ -75,15 +76,15 @@ namespace YourBudget.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(password))            
             {
-                throw new ArgumentNullException(nameof(password));
+                throw new DomainException(ErrorCodes.InvalidPassword, "Password can not be null");
             }
             if (password.Length < 4)
             {
-                throw new Exception("Password must contain at least 4 characters.");
+                throw new DomainException(ErrorCodes.InvalidPassword, "Password must contain at least 4 characters.");
             }
             if (password.Length > 100)
             {
-                throw new Exception("Password can not contain more than 100 characters.");
+                throw new DomainException(ErrorCodes.InvalidPassword, "Password can not contain more than 100 characters.");
             }
             Password = password;
         }

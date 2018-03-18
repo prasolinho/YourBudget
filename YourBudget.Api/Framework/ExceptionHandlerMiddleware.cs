@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using YourBudget.Infrastructure.Exceptions;
 
 namespace YourBudget.Api.Framework
 {
@@ -40,7 +39,10 @@ namespace YourBudget.Api.Framework
                 case Exception e when exceptionType == typeof(UnauthorizedAccessException):
                     statusCode = HttpStatusCode.Unauthorized;
                     break;
-                // TODO: Custom exception
+                case ServiceException e when exceptionType == typeof(ServiceException):
+                    statusCode = HttpStatusCode.BadRequest;
+                    errorCode = e.Code;
+                    break;
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
                     break;

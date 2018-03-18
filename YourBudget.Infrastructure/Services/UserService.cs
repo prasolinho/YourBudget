@@ -1,9 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using YourBudget.Core.Domain;
 using YourBudget.Core.Repositories;
 using YourBudget.Infrastructure.DTO;
+using YourBudget.Infrastructure.Exceptions;
 
 namespace YourBudget.Infrastructure.Services
 {
@@ -11,12 +13,14 @@ namespace YourBudget.Infrastructure.Services
     {
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<UserService> logger;
         private readonly IEncrypter encrypter;
 
-        public UserService(IUserRepository userRepository, IEncrypter encrypter, IMapper mapper)
+        public UserService(IUserRepository userRepository, IEncrypter encrypter, IMapper mapper, ILogger<UserService> logger)
         {
             this.encrypter = encrypter;
             this.mapper = mapper;
+            this.logger = logger;
             this.userRepository = userRepository;
         }
 
@@ -32,13 +36,15 @@ namespace YourBudget.Infrastructure.Services
             var user = await userRepository.GetAsync(email); 
             if (user == null)
             {
-                throw new Exception("Invalid credentials");
+                logger.LogTrace("Login: User with passed email doesn't exists");
+                throw new ServiceException(ErrorCodes.InvalidCredentials, "Invalid credentials");
             }
 
             var hash = encrypter.GetHash(password, user.Salt);
             if (user.Password == hash) return true;
 
-            throw new Exception("Invalid credentials");
+            logger.LogTrace("Login: invalid password");
+            throw new ServiceException(ErrorCodes.InvalidCredentials, "Invalid credentials");
         }
 
         public async Task RegisterAsync(Guid userId, string email, string username, string password, string role)
@@ -46,7 +52,7 @@ namespace YourBudget.Infrastructure.Services
             var user = await userRepository.GetAsync(email);
             if (user != null)
             {
-                throw new Exception($"User with email: '{email}' already exists.");
+                throw new ServiceException(ErrorCodes.EmailInUse, $"User with email: '{email}' already exists.");
             }
 
             var salt = encrypter.GetSalt();
