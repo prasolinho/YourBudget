@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using NLog.Web;
 using System.Net.Http;
 using System.Text;
 using YourBudget.Api;
@@ -25,14 +26,13 @@ namespace YourBudget.Tests.EndToEnd.Controllers
                 .Build();
 
             Server = new TestServer(new WebHostBuilder()
-                // Doesn't work in here :(
-                //.ConfigureLogging((hostingContext, logging) =>
-                //{
-                //    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-                //    logging.AddConsole();
-                //    logging.AddDebug();
-                //})
                 .UseStartup<Startup>()
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                })
+                .UseNLog()  // NLog: setup NLog for Dependency injection
                 .UseConfiguration(configuration));
             Client = Server.CreateClient();
         }

@@ -14,6 +14,8 @@
     <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.1" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.0-rc3" />
+    <PackageReference Include="NLog" Version="4.5.0-rc06" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +24,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\YourBudget.Infrastructure\YourBudget.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

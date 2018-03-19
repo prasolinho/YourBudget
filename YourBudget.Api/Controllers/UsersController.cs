@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using YourBudget.Infrastructure.Command;
 using YourBudget.Infrastructure.Command.Users;
-using YourBudget.Infrastructure.DTO;
 using YourBudget.Infrastructure.Services;
 
 namespace YourBudget.Api.Controllers

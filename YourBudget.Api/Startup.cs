@@ -1,27 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using YourBudget.Api.Framework;
 using YourBudget.Core.Repositories;
-using YourBudget.Infrastructure.IoC;
-using YourBudget.Infrastructure.IoC.Modules;
-using YourBudget.Infrastructure.Mappers;
+using YourBudget.Infrastructure.IoC;using YourBudget.Infrastructure.Mappers;
 using YourBudget.Infrastructure.Repositories;
-using YourBudget.Infrastructure.Services;   
+using YourBudget.Infrastructure.Services;
+using NLog;
+using NLog.Web;
 
 namespace YourBudget.Api
 {

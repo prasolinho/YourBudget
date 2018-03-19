@@ -28,6 +28,7 @@ namespace YourBudget.Infrastructure.Services
         public async Task<UserDto> GetAsync(string email)
         {
             var user = await userRepository.GetAsync(email);
+            logger.LogTrace($"GetAsync: return user with email {email}");
             return mapper.Map<User, UserDto>(user);
         }
 
