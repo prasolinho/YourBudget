@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 using YourBudget.Core.Domain;
@@ -13,8 +14,8 @@ namespace YourBudget.Tests.Services.UserService
     {
         private readonly Mock<IUserRepository> userRepository;
         private readonly Mock<IMapper> mapper;
-
         private readonly Mock<IEncrypter> encrypter;
+        private readonly Mock<ILogger<Infrastructure.Services.UserService>> logger;
 
         private string email = "user12@email.com";
         private Guid userId = Guid.NewGuid();
@@ -24,6 +25,7 @@ namespace YourBudget.Tests.Services.UserService
             userRepository = new Mock<IUserRepository>();
             mapper = new Mock<IMapper>();
             encrypter = new Mock<IEncrypter>();
+            logger = new Mock<ILogger<Infrastructure.Services.UserService>>();
         }
 
         [Fact]
@@ -65,7 +67,7 @@ namespace YourBudget.Tests.Services.UserService
 
         private async Task Execute()
         {
-            var userService = new Infrastructure.Services.UserService(userRepository.Object, encrypter.Object, mapper.Object);
+            var userService = new Infrastructure.Services.UserService(userRepository.Object, encrypter.Object, mapper.Object, logger.Object);
             await userService.RegisterAsync(userId, email, "user12", "secret12", "user");
         }
     }

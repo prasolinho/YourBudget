@@ -11,11 +11,10 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using YourBudget.Api.Framework;
 using YourBudget.Core.Repositories;
-using YourBudget.Infrastructure.IoC;using YourBudget.Infrastructure.Mappers;
+using YourBudget.Infrastructure.IoC;
+using YourBudget.Infrastructure.Mappers;
 using YourBudget.Infrastructure.Repositories;
 using YourBudget.Infrastructure.Services;
-using NLog;
-using NLog.Web;
 
 namespace YourBudget.Api
 {

@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 using YourBudget.Core.Domain;
@@ -15,6 +16,7 @@ namespace YourBudget.Tests.Services.UserService
         private Mock<IUserRepository> userRepository;
         private readonly Mock<IEncrypter> encrypter;
         private readonly Mock<IMapper> mapper;
+        private readonly Mock<ILogger<Infrastructure.Services.UserService>> logger;
 
         private string email;
         private string password;
@@ -25,6 +27,7 @@ namespace YourBudget.Tests.Services.UserService
             userRepository = new Mock<IUserRepository>();
             encrypter = new Mock<IEncrypter>();
             mapper = new Mock<IMapper>();
+            logger = new Mock<ILogger<Infrastructure.Services.UserService>>();
 
             email = "test@test.pl";
             password = "mySafePassword";
@@ -98,7 +101,7 @@ namespace YourBudget.Tests.Services.UserService
 
         private async Task<bool> Execute()
         {
-            var userService = new Infrastructure.Services.UserService(userRepository.Object, encrypter.Object, mapper.Object);
+            var userService = new Infrastructure.Services.UserService(userRepository.Object, encrypter.Object, mapper.Object, logger.Object);
             return await userService.LoginAsync(email, password);
         }
     }
